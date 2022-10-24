@@ -1,5 +1,4 @@
 import logging
-import aiohttp
 import requests
 import os
 from dotenv import load_dotenv
@@ -23,10 +22,16 @@ def get_order(title: str):
     return req.json()
 
 
-@dp.message_handler(commands=['start', 'help'])
+@dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
     await message.reply("Hi!\nI'm ChūmonBot!\n To get order of a specific anime enter /order <ANIME-TITLE>")
 
+@dp.message_handler(commands=['help'])
+async def send_help(message: types.Message):
+    TEXT = "Welcome maester \n\n * To get order of a specific enter /order <ANIME-TITLE> and don't forget only to use lowercase and underscores instead of spaces \n\n * To request order enter /request ANIME_TITLE \n\n If u r having issues contact me @Itachiinthesky"
+    rkm = InlineKeyboardMarkup(row_wigth=1)
+    rkm.add(InlineKeyboardButton("Github", "https://github.com/Besufikad17/Chumon"))
+    await message.answer(TEXT,reply_markup=rkm)
 
 @dp.message_handler(commands=['order'])
 async def send_watch_order(message: types.Message):
