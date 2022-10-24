@@ -42,7 +42,7 @@ async def send_watch_order(message: types.Message):
         else:
             rkm = InlineKeyboardMarkup(row_wigth=1)
             rkm.add(InlineKeyboardButton("More..", "https://www.reddit.com/r/anime/wiki/watch_order/"))
-            await message.answer(res[0]['order'], reply_markup=rkm)
+            await message.answer(res[0]['order'], parse_mode="MARKDOWN", reply_markup=rkm)
 
 
 @dp.message_handler()
