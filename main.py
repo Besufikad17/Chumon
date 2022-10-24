@@ -10,6 +10,7 @@ load_dotenv()
 
 API_TOKEN = os.getenv('API_TOKEN')
 PROXY_URL = os.getenv('PROXY_URL')
+API_URL = os.getenv('API_URL')
 
 logging.basicConfig(level=logging.INFO)
 
@@ -18,7 +19,7 @@ dp = Dispatcher(bot)
 
 
 def get_order(title: str):
-    req = requests.get(f'http://localhost:4000/api/order/{title}')
+    req = requests.get(f'{API_URL}/api/order/{title}')
     return req.json()
 
 
@@ -33,10 +34,19 @@ async def send_help(message: types.Message):
     rkm.add(InlineKeyboardButton("Github", "https://github.com/Besufikad17/Chumon"))
     await message.answer(TEXT,reply_markup=rkm)
 
+@dp.message_handler(commands=['request'])
+async def submit_request(message: types.Message):
+    anime_title = message.text[9:] 
+    req = requests.post(f'{API_URL}/api/request/{anime_title}')
+    if req.status_code == 200 or req.status_code == 400:
+        await message.reply(req.json()['msg'])
+    else:
+        print(req.json())
+
 @dp.message_handler(commands=['order'])
 async def send_watch_order(message: types.Message):
     anime_title = message.text[7:]
-    print(anime_title)
+
     if anime_title is None:
         await message.reply("That's not quite right!! \n To get order of a specific anime enter /order <ANIME TITLE>")
     else:
