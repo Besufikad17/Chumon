@@ -22,6 +22,10 @@ async def get_order(title: str):
     req = requests.get(f'{API_URL}api/order/{title}')
     return req.json()
 
+async def get_list():
+    req = requests.get(f'{API_URL}api/list')
+    list_of_anime = dict(req.json()).keys()
+    return list_of_anime
 
 @dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
@@ -42,6 +46,14 @@ async def submit_request(message: types.Message):
         await message.reply(req.json()['msg'])
     else:
         print(req.json())
+
+
+@dp.message_handler(commands=['list'])
+async def send_list(message: types.Message):
+    TEXT = ""
+    for list in get_list():
+        TEXT += f"\n {list}"
+    await message.answer(TEXT)
 
 @dp.message_handler(commands=['order'])
 async def send_watch_order(message: types.Message):
