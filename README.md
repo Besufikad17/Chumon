@@ -26,7 +26,7 @@ Chumon in Japanese stands for order since I am terrible at naming things I used 
 
 # Usage
  
-  Start using the bot by using this [link] (http://t.me/chumon_bot)
+  Start using the bot by using this [link] (https://t.me/chumon_bot)
 
   ```console
      /order ajin
