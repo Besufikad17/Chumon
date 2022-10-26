@@ -1,6 +1,7 @@
 import logging
 import requests
 import os
+import time
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -18,8 +19,8 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-def get_order(title: str):
-    req = requests.get(f'{API_URL}/api/order/{title}')
+async def get_order(title: str):
+    req = requests.get(f'{API_URL}api/order/{title}')
     return req.json()
 
 
@@ -50,7 +51,7 @@ async def send_watch_order(message: types.Message):
     if anime_title is None:
         await message.reply("That's not quite right!! \n To get order of a specific anime enter /order <ANIME TITLE>")
     else:
-        res = get_order(anime_title)
+        res = await get_order(anime_title)
         
         if res is None or len(res) == 0:
             await message.reply("Can't find the anime :( try alternative titles")
