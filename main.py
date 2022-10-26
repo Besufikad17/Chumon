@@ -10,7 +10,6 @@ load_dotenv()
 
 
 API_TOKEN = os.getenv('API_TOKEN')
-PROXY_URL = os.getenv('PROXY_URL')
 API_URL = os.getenv('API_URL')
 
 logging.basicConfig(level=logging.INFO)
