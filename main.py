@@ -1,7 +1,6 @@
 import logging
 import requests
 import os
-import time
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -22,9 +21,11 @@ async def get_order(title: str):
     req = requests.get(f'{API_URL}api/order/{title}')
     return req.json()
 
-async def get_list():
+def get_list():
     req = requests.get(f'{API_URL}api/list')
-    list_of_anime = dict(req.json()).keys()
+    list_of_anime = []
+    for i in req.json():
+        list_of_anime.append(i['title'])
     return list_of_anime
 
 @dp.message_handler(commands=['start'])
@@ -51,7 +52,7 @@ async def submit_request(message: types.Message):
 @dp.message_handler(commands=['list'])
 async def send_list(message: types.Message):
     TEXT = ""
-    lists = await get_list()
+    lists = get_list()
     for list_ in lists:
         TEXT += f"\n {list_}"
     await message.answer(TEXT)
