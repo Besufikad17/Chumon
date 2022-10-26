@@ -34,7 +34,7 @@ async def send_welcome(message: types.Message):
 
 @dp.message_handler(commands=['help'])
 async def send_help(message: types.Message):
-    TEXT = "Welcome maester \n\n * To get order of a specific enter /order <ANIME-TITLE> and don't forget only to use lowercase and underscores instead of spaces \n\n * To request order enter /request ANIME_TITLE \n\n If u r having issues contact me @Itachiinthesky"
+    TEXT = "Welcome maester \n\n * To get order of a specific enter /order <ANIME-TITLE> and don't forget only to use lowercase \n\n * To request order enter /request ANIME_TITLE \n\n If u r having issues contact me @Itachiinthesky"
     rkm = InlineKeyboardMarkup(row_wigth=1)
     rkm.add(InlineKeyboardButton("Github", "https://github.com/Besufikad17/Chumon"))
     await message.answer(TEXT,reply_markup=rkm)
@@ -60,6 +60,7 @@ async def send_list(message: types.Message):
 @dp.message_handler(commands=['order'])
 async def send_watch_order(message: types.Message):
     anime_title = message.text[7:]
+    anime_title = anime_title.lower()
 
     if anime_title is None:
         await message.reply("That's not quite right!! \n To get order of a specific anime enter /order <ANIME TITLE>")
