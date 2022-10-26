@@ -77,7 +77,7 @@ async def send_watch_order(message: types.Message):
 
 @dp.message_handler()
 async def echo(message: types.Message):
-    await message.answer(message.text)
+    await message.answer("Read instructions using /help mf")
 
 
 if __name__ == '__main__':
