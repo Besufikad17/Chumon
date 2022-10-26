@@ -51,8 +51,9 @@ async def submit_request(message: types.Message):
 @dp.message_handler(commands=['list'])
 async def send_list(message: types.Message):
     TEXT = ""
-    for list in get_list():
-        TEXT += f"\n {list}"
+    lists = await get_list()
+    for list_ in lists:
+        TEXT += f"\n {list_}"
     await message.answer(TEXT)
 
 @dp.message_handler(commands=['order'])
